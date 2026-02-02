@@ -1,262 +1,626 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>TuSistema | Gestión Comercial Simple</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lector Web Automático</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <meta name="description" content="TuSistema es un sistema de gestión comercial en la nube para comercios. Facturación, ventas, stock y reportes claros." />
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-  <style>
-    :root {
-      --color-primario: #1e293b;
-      --color-secundario: #2563eb;
-      --color-fondo: #f8fafc;
-      --color-texto: #0f172a;
-      --color-gris: #64748b;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-    }
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            text-align: center;
+            color: white;
+        }
 
-    body {
-      background: var(--color-fondo);
-      color: var(--color-texto);
-      line-height: 1.6;
-    }
+        .header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
 
-    header {
-      background: white;
-      border-bottom: 1px solid #e5e7eb;
-      padding: 16px 24px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+        .header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
 
-    header h1 {
-      font-size: 1.4rem;
-      color: var(--color-primario);
-    }
+        .main-section {
+            padding: 50px;
+        }
 
-    header nav a {
-      margin-left: 20px;
-      text-decoration: none;
-      color: var(--color-gris);
-      font-weight: 500;
-    }
+        .url-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+        }
 
-    header nav a:hover {
-      color: var(--color-secundario);
-    }
+        .url-box h2 {
+            color: white;
+            font-size: 2em;
+            margin-bottom: 25px;
+            text-align: center;
+        }
 
-    .hero {
-      padding: 80px 24px;
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 40px;
-      align-items: center;
-    }
+        .url-input-group {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-    .hero h2 {
-      font-size: 2.6rem;
-      line-height: 1.2;
-      margin-bottom: 20px;
-    }
+        #urlInput {
+            flex: 1;
+            padding: 20px;
+            font-size: 18px;
+            border: 3px solid white;
+            border-radius: 15px;
+            outline: none;
+        }
 
-    .hero p {
-      font-size: 1.1rem;
-      color: var(--color-gris);
-      margin-bottom: 30px;
-    }
+        #urlInput:focus {
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.3);
+        }
 
-    .hero .buttons a {
-      display: inline-block;
-      margin-right: 15px;
-      padding: 12px 24px;
-      border-radius: 6px;
-      text-decoration: none;
-      font-weight: 600;
-    }
+        .btn-load {
+            padding: 20px 50px;
+            background: white;
+            color: #f5576c;
+            border: none;
+            border-radius: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-    .btn-primary {
-      background: var(--color-secundario);
-      color: white;
-    }
+        .btn-load:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
 
-    .btn-secondary {
-      border: 2px solid var(--color-secundario);
-      color: var(--color-secundario);
-    }
+        .btn-load:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
 
-    .hero-box {
-      background: white;
-      border-radius: 10px;
-      padding: 30px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-    }
+        .examples {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
 
-    section {
-      max-width: 1100px;
-      margin: 80px auto;
-      padding: 0 24px;
-    }
+        .example-btn {
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
 
-    section h3 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
+        .example-btn:hover {
+            background: white;
+            color: #f5576c;
+        }
 
-    .features {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 30px;
-      margin-top: 40px;
-    }
+        .controls-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+        }
 
-    .feature {
-      background: white;
-      padding: 24px;
-      border-radius: 8px;
-      border: 1px solid #e5e7eb;
-    }
+        .controls-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
 
-    .feature h4 {
-      margin-bottom: 10px;
-      color: var(--color-primario);
-    }
+        .btn {
+            padding: 18px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-    .feature p {
-      color: var(--color-gris);
-      font-size: 0.95rem;
-    }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
 
-    .cta {
-      background: var(--color-primario);
-      color: white;
-      padding: 60px 24px;
-      text-align: center;
-    }
+        .btn-play {
+            background: #28a745;
+            color: white;
+        }
 
-    .cta h3 {
-      font-size: 2.2rem;
-      margin-bottom: 15px;
-    }
+        .btn-play:hover:not(:disabled) {
+            background: #218838;
+            transform: translateY(-2px);
+        }
 
-    .cta p {
-      color: #cbd5f5;
-      margin-bottom: 30px;
-    }
+        .btn-pause {
+            background: #ffc107;
+            color: #333;
+        }
 
-    footer {
-      background: #020617;
-      color: #94a3b8;
-      padding: 30px 24px;
-      text-align: center;
-      font-size: 0.9rem;
-    }
+        .btn-pause:hover:not(:disabled) {
+            background: #e0a800;
+        }
 
-    @media (max-width: 900px) {
-      .hero {
-        grid-template-columns: 1fr;
-        text-align: center;
-      }
+        .btn-resume {
+            background: #17a2b8;
+            color: white;
+        }
 
-      .hero .buttons a {
-        margin-bottom: 10px;
-      }
-    }
-  </style>
+        .btn-resume:hover:not(:disabled) {
+            background: #138496;
+        }
+
+        .btn-stop {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-stop:hover:not(:disabled) {
+            background: #c82333;
+        }
+
+        .control-group {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .control-group label {
+            display: block;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+            height: 8px;
+        }
+
+        .value-display {
+            min-width: 50px;
+            text-align: center;
+            font-weight: bold;
+            color: #667eea;
+            font-size: 18px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .content-display {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            max-height: 500px;
+            overflow-y: auto;
+            display: none;
+        }
+
+        .content-display.active {
+            display: block;
+        }
+
+        .content-display h3 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .content-text {
+            line-height: 1.8;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .status {
+            padding: 20px;
+            border-radius: 12px;
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .status.loading {
+            background: #fff3cd;
+            color: #856404;
+            border-left: 5px solid #ffc107;
+        }
+
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+            border-left: 5px solid #28a745;
+        }
+
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+            border-left: 5px solid #dc3545;
+        }
+
+        .status.playing {
+            background: #d1ecf1;
+            color: #0c5460;
+            border-left: 5px solid #17a2b8;
+        }
+
+        .char-count {
+            text-align: center;
+            color: #6c757d;
+            font-size: 15px;
+            margin-top: 15px;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .url-input-group {
+                flex-direction: column;
+            }
+
+            .controls-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header h1 {
+                font-size: 2em;
+            }
+        }
+    </style>
 </head>
 <body>
-
-  <header>
-    <h1>TuSistema</h1>
-    <nav>
-      <a href="#caracteristicas">Características</a>
-      <a href="#como-funciona">Cómo funciona</a>
-      <a href="#contacto">Contacto</a>
-      <a href="#">Ingresar</a>
-    </nav>
-  </header>
-
-  <main>
-    <section class="hero">
-      <div>
-        <h2>Gestión comercial clara, sin vueltas</h2>
-        <p>
-          TuSistema te ayuda a llevar ventas, stock y reportes de tu negocio
-          de forma simple, ordenada y sin complicaciones.
-        </p>
-        <div class="buttons">
-          <a href="#" class="btn-primary">Probar el sistema</a>
-          <a href="#como-funciona" class="btn-secondary">Cómo funciona</a>
+    <div class="container">
+        <div class="header">
+            <h1>🌐 Lector Web Automático</h1>
+            <p>Pega cualquier URL y escúchala en voz alta</p>
         </div>
-      </div>
 
-      <div class="hero-box">
-        <h3>Hecho para comercios reales</h3>
-        <p>
-          Pensado para locales, pymes y negocios que necesitan control,
-          no palabras raras.
-        </p>
-        <ul>
-          <li>✔ Ventas claras</li>
-          <li>✔ Stock bajo control</li>
-          <li>✔ Reportes simples</li>
-          <li>✔ Usuarios con permisos</li>
-        </ul>
-      </div>
-    </section>
+        <div class="main-section">
+            <div class="url-box">
+                <h2>🔗 Ingresa la URL de la página web</h2>
+                <div class="url-input-group">
+                    <input 
+                        type="text" 
+                        id="urlInput" 
+                        placeholder="https://es.wikipedia.org/wiki/Inteligencia_artificial"
+                    >
+                    <button class="btn-load" id="loadBtn" onclick="cargarPagina()">
+                        📥 Cargar y Leer
+                    </button>
+                </div>
+                <div class="examples">
+                    <button class="example-btn" onclick="cargarEjemplo('https://es.wikipedia.org/wiki/Inteligencia_artificial')">
+                        📖 Wikipedia IA
+                    </button>
+                    <button class="example-btn" onclick="cargarEjemplo('https://es.wikipedia.org/wiki/Historia_de_Argentina')">
+                        📖 Wikipedia Argentina
+                    </button>
+                    <button class="example-btn" onclick="cargarEjemplo('https://en.wikipedia.org/wiki/Artificial_intelligence')">
+                        📖 Wikipedia EN
+                    </button>
+                </div>
+            </div>
 
-    <section id="caracteristicas">
-      <h3>¿Qué ofrece TuSistema?</h3>
-      <div class="features">
-        <div class="feature">
-          <h4>Facturación</h4>
-          <p>Registrá ventas y comprobantes sin errores ni desorden.</p>
+            <div class="controls-section">
+                <div class="controls-grid">
+                    <button class="btn btn-play" id="playBtn" onclick="reproducir()" disabled>
+                        ▶️ Reproducir
+                    </button>
+                    <button class="btn btn-pause" id="pauseBtn" onclick="pausar()" disabled>
+                        ⏸️ Pausar
+                    </button>
+                    <button class="btn btn-resume" id="resumeBtn" onclick="reanudar()" disabled>
+                        ▶️ Continuar
+                    </button>
+                    <button class="btn btn-stop" id="stopBtn" onclick="detener()" disabled>
+                        ⏹️ Detener
+                    </button>
+                </div>
+
+                <div class="control-group">
+                    <label>⚡ Velocidad de lectura</label>
+                    <div class="slider-container">
+                        <span>Lento</span>
+                        <input type="range" id="speedSlider" min="0.5" max="2" step="0.1" value="1.1">
+                        <span>Rápido</span>
+                        <span class="value-display" id="speedValue">1.1x</span>
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label>🗣️ Seleccionar voz</label>
+                    <select id="voiceSelect"></select>
+                </div>
+
+                <div id="statusMessage"></div>
+                <div class="char-count" id="charCount"></div>
+            </div>
+
+            <div class="content-display" id="contentDisplay">
+                <h3>📄 Contenido extraído:</h3>
+                <div class="content-text" id="contentText"></div>
+            </div>
         </div>
-        <div class="feature">
-          <h4>Stock</h4>
-          <p>Controlá productos, entradas y salidas en tiempo real.</p>
-        </div>
-        <div class="feature">
-          <h4>Reportes</h4>
-          <p>Sabé qué vendés, cuándo y cuánto ganás.</p>
-        </div>
-        <div class="feature">
-          <h4>Usuarios</h4>
-          <p>Asigná accesos según el rol de cada persona.</p>
-        </div>
-      </div>
-    </section>
+    </div>
 
-    <section id="como-funciona">
-      <h3>Cómo funciona</h3>
-      <p>
-        Accedés desde cualquier dispositivo con internet.
-        No instalás nada. Todo queda ordenado y respaldado.
-      </p>
-    </section>
+    <script>
+        let textoCompleto = '';
+        let utterance = null;
+        let isPaused = false;
 
-    <section class="cta" id="contacto">
-      <h3>Empezá a ordenar tu negocio hoy</h3>
-      <p>
-        Probá TuSistema y simplificá la gestión diaria de tu comercio.
-      </p>
-      <a href="#" class="btn-primary">Contactanos</a>
-    </section>
-  </main>
+        // Actualizar velocidad
+        document.getElementById('speedSlider').addEventListener('input', function() {
+            document.getElementById('speedValue').textContent = this.value + 'x';
+        });
 
-  <footer>
-    © 2026 TuSistema — Gestión comercial simple y clara
-  </footer>
+        // Cargar voces
+        function cargarVoces() {
+            const voices = window.speechSynthesis.getVoices();
+            const select = document.getElementById('voiceSelect');
+            select.innerHTML = '';
 
+            const vocesEspanol = voices.filter(v => v.lang.includes('es') || v.lang.includes('ES'));
+            const vocesFemeninas = vocesEspanol.filter(v =>
+                v.name.toLowerCase().includes('female') ||
+                v.name.toLowerCase().includes('zira') ||
+                v.name.toLowerCase().includes('helena') ||
+                v.name.toLowerCase().includes('monica') ||
+                v.name.toLowerCase().includes('paulina') ||
+                v.name.toLowerCase().includes('lucia') ||
+                v.name.toLowerCase().includes('paloma') ||
+                v.name.toLowerCase().includes('sabina')
+            );
+
+            const vocesOrdenadas = [...vocesFemeninas, ...vocesEspanol.filter(v => !vocesFemeninas.includes(v))];
+            
+            if (vocesOrdenadas.length === 0) {
+                vocesOrdenadas.push(...voices);
+            }
+
+            vocesOrdenadas.forEach((voice, index) => {
+                const option = document.createElement('option');
+                option.value = index;
+                const esFemenina = vocesFemeninas.includes(voice);
+                option.textContent = `${voice.name}${esFemenina ? ' 👩 (Femenina)' : ''}`;
+                select.appendChild(option);
+            });
+        }
+
+        window.speechSynthesis.onvoiceschanged = cargarVoces;
+        cargarVoces();
+
+        function cargarEjemplo(url) {
+            document.getElementById('urlInput').value = url;
+            cargarPagina();
+        }
+
+        async function cargarPagina() {
+            let url = document.getElementById('urlInput').value.trim();
+
+            if (!url) {
+                mostrarEstado('⚠️ Por favor ingresa una URL', 'error');
+                return;
+            }
+
+            // Normalizar URL
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                url = 'https://' + url;
+            }
+
+            try {
+                new URL(url);
+            } catch (e) {
+                mostrarEstado('❌ URL inválida', 'error');
+                return;
+            }
+
+            mostrarEstado('⏳ Cargando página...', 'loading');
+            document.getElementById('loadBtn').disabled = true;
+            document.getElementById('contentDisplay').classList.remove('active');
+
+            try {
+                // Usar API de extracción de texto
+                const apiUrl = `https://r.jina.ai/${encodeURIComponent(url)}`;
+                
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'Accept': 'text/plain'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar la página');
+                }
+
+                textoCompleto = await response.text();
+
+                // Limpiar texto
+                textoCompleto = textoCompleto
+                    .replace(/\[.*?\]/g, '') // Eliminar links de markdown
+                    .replace(/\n{3,}/g, '\n\n') // Reducir saltos de línea múltiples
+                    .replace(/\s+/g, ' ') // Normalizar espacios
+                    .trim();
+
+                if (textoCompleto.length < 100) {
+                    throw new Error('No se pudo extraer suficiente contenido');
+                }
+
+                // Mostrar contenido
+                document.getElementById('contentText').textContent = textoCompleto;
+                document.getElementById('contentDisplay').classList.add('active');
+                
+                mostrarEstado(`✅ Página cargada exitosamente`, 'success');
+                document.getElementById('charCount').textContent = `📊 ${textoCompleto.length} caracteres extraídos`;
+                
+                document.getElementById('playBtn').disabled = false;
+                document.getElementById('loadBtn').disabled = false;
+
+            } catch (error) {
+                console.error('Error:', error);
+                mostrarEstado(`❌ Error al cargar: ${error.message}. Intenta con otra URL o usa los ejemplos de Wikipedia.`, 'error');
+                document.getElementById('loadBtn').disabled = false;
+            }
+        }
+
+        function reproducir() {
+            if (!textoCompleto) {
+                mostrarEstado('⚠️ Primero carga una página', 'error');
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+
+            utterance = new SpeechSynthesisUtterance(textoCompleto);
+
+            const voices = window.speechSynthesis.getVoices();
+            const vocesEspanol = voices.filter(v => v.lang.includes('es') || v.lang.includes('ES'));
+            const vocesFemeninas = vocesEspanol.filter(v =>
+                v.name.toLowerCase().includes('female') ||
+                v.name.toLowerCase().includes('zira') ||
+                v.name.toLowerCase().includes('helena') ||
+                v.name.toLowerCase().includes('monica') ||
+                v.name.toLowerCase().includes('paulina') ||
+                v.name.toLowerCase().includes('lucia') ||
+                v.name.toLowerCase().includes('paloma') ||
+                v.name.toLowerCase().includes('sabina')
+            );
+            const vocesOrdenadas = [...vocesFemeninas, ...vocesEspanol.filter(v => !vocesFemeninas.includes(v))];
+            
+            if (vocesOrdenadas.length === 0) {
+                vocesOrdenadas.push(...voices);
+            }
+
+            const selectedIndex = document.getElementById('voiceSelect').value;
+            if (vocesOrdenadas[selectedIndex]) {
+                utterance.voice = vocesOrdenadas[selectedIndex];
+            }
+
+            utterance.rate = parseFloat(document.getElementById('speedSlider').value);
+            utterance.pitch = 1;
+            utterance.volume = 1;
+
+            utterance.onstart = () => {
+                mostrarEstado('🔊 Reproduciendo...', 'playing');
+                document.getElementById('playBtn').disabled = true;
+                document.getElementById('pauseBtn').disabled = false;
+                document.getElementById('stopBtn').disabled = false;
+                isPaused = false;
+            };
+
+            utterance.onend = () => {
+                mostrarEstado('✅ Lectura completada', 'success');
+                resetearBotones();
+            };
+
+            utterance.onerror = (e) => {
+                mostrarEstado('❌ Error: ' + e.error, 'error');
+                resetearBotones();
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        function pausar() {
+            if (window.speechSynthesis.speaking && !isPaused) {
+                window.speechSynthesis.pause();
+                isPaused = true;
+                mostrarEstado('⏸️ Pausado', 'playing');
+                document.getElementById('pauseBtn').disabled = true;
+                document.getElementById('resumeBtn').disabled = false;
+            }
+        }
+
+        function reanudar() {
+            if (isPaused) {
+                window.speechSynthesis.resume();
+                isPaused = false;
+                mostrarEstado('🔊 Reproduciendo...', 'playing');
+                document.getElementById('pauseBtn').disabled = false;
+                document.getElementById('resumeBtn').disabled = true;
+            }
+        }
+
+        function detener() {
+            window.speechSynthesis.cancel();
+            isPaused = false;
+            mostrarEstado('⏹️ Detenido', 'success');
+            resetearBotones();
+        }
+
+        function resetearBotones() {
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('pauseBtn').disabled = true;
+            document.getElementById('resumeBtn').disabled = true;
+            document.getElementById('stopBtn').disabled = true;
+        }
+
+        function mostrarEstado(mensaje, tipo) {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.innerHTML = `<div class="status ${tipo}">${mensaje}</div>`;
+        }
+    </script>
 </body>
 </html>

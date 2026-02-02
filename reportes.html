@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reportes | TuSistema</title>
+
+  <style>
+    :root {
+      --primario: #1e293b;
+      --secundario: #2563eb;
+      --fondo: #f1f5f9;
+      --blanco: #ffffff;
+      --gris: #64748b;
+      --borde: #e5e7eb;
+      --verde: #16a34a;
+      --rojo: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: var(--primario);
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .menu a {
+      display: block;
+      color: #cbd5f5;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .menu a.active,
+    .menu a:hover {
+      background: #334155;
+      color: white;
+    }
+
+    /* CONTENT */
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .topbar h1 {
+      color: var(--primario);
+      margin-bottom: 20px;
+    }
+
+    /* FILTERS */
+    .filters {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 6px;
+      display: block;
+    }
+
+    input, select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--borde);
+    }
+
+    .btn {
+      background: var(--secundario);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      padding: 12px;
+    }
+
+    /* BOX */
+    .box {
+      background: var(--blanco);
+      border-radius: 10px;
+      padding: 20px;
+      border: 1px solid var(--borde);
+      margin-bottom: 20px;
+    }
+
+    /* RESUMEN */
+    .resumen {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--borde);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      color: var(--gris);
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primario);
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--borde);
+      font-size: 0.95rem;
+    }
+
+    th {
+      color: var(--gris);
+      text-align: left;
+    }
+
+    .positivo {
+      color: var(--verde);
+      font-weight: 700;
+    }
+
+    .negativo {
+      color: var(--rojo);
+      font-weight: 700;
+    }
+
+    @media (max-width: 1000px) {
+      .sidebar {
+        display: none;
+      }
+
+      .filters {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <h2>TuSistema</h2>
+    <nav class="menu">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ventas.html">Ventas</a>
+      <a href="stock.html">Stock</a>
+      <a href="reportes.html" class="active">Reportes</a>
+      <a href="#">Salir</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="topbar">
+      <h1>Reportes</h1>
+    </div>
+
+    <!-- FILTROS -->
+    <section class="box">
+      <div class="filters">
+        <div>
+          <label>Desde</label>
+          <input type="date">
+        </div>
+        <div>
+          <label>Hasta</label>
+          <input type="date">
+        </div>
+        <div>
+          <label>Tipo</label>
+          <select>
+            <option>Ventas</option>
+            <option>Productos</option>
+            <option>Categorías</option>
+          </select>
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button class="btn">Generar reporte</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESUMEN -->
+    <section class="resumen">
+      <div class="card">
+        <h3>Total vendido</h3>
+        <p>$ 3.250.000</p>
+      </div>
+      <div class="card">
+        <h3>Cantidad de ventas</h3>
+        <p>214</p>
+      </div>
+      <div class="card">
+        <h3>Ticket promedio</h3>
+        <p>$ 15.186</p>
+      </div>
+    </section>
+
+    <!-- DETALLE -->
+    <section class="box">
+      <h3>Detalle del reporte</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Fecha</th>
+            <th>Concepto</th>
+            <th>Cantidad</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>01/02/2026</td>
+            <td>Ventas mostrador</td>
+            <td>32</td>
+            <td class="positivo">$ 185.000</td>
+          </tr>
+          <tr>
+            <td>31/01/2026</td>
+            <td>Ventas mostrador</td>
+            <td>21</td>
+            <td class="positivo">$ 128.500</td>
+          </tr>
+          <tr>
+            <td>30/01/2026</td>
+            <td>Devoluciones</td>
+            <td>3</td>
+            <td class="negativo">- $ 12.000</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</body>
+</html>

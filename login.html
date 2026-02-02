@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ingresar | TuSistema</title>
+
+  <style>
+    :root {
+      --primario: #1e293b;
+      --secundario: #2563eb;
+      --fondo: #f1f5f9;
+      --blanco: #ffffff;
+      --gris: #64748b;
+      --error: #dc2626;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .login-container {
+      background: var(--blanco);
+      width: 100%;
+      max-width: 420px;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .login-container h1 {
+      margin-bottom: 10px;
+      color: var(--primario);
+      text-align: center;
+    }
+
+    .login-container p {
+      text-align: center;
+      color: var(--gris);
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 6px;
+      border: 1px solid #cbd5f5;
+      font-size: 1rem;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--secundario);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: var(--secundario);
+      border: none;
+      border-radius: 6px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      background: #1d4ed8;
+    }
+
+    .extra {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 0.85rem;
+    }
+
+    .extra a {
+      color: var(--secundario);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .error {
+      background: #fee2e2;
+      color: var(--error);
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      margin-bottom: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <h1>TuSistema</h1>
+    <p>Ingresá a tu panel de gestión</p>
+
+    <div class="error" id="errorBox">
+      Usuario o contraseña incorrectos
+    </div>
+
+    <form id="loginForm">
+      <div class="form-group">
+        <label for="email">Usuario o Email</label>
+        <input type="text" id="email" placeholder="usuario@correo.com" required>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+
+      <button class="btn" type="submit">Ingresar</button>
+    </form>
+
+    <div class="extra">
+      <a href="#">¿Olvidaste tu contraseña?</a>
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('loginForm');
+    const errorBox = document.getElementById('errorBox');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      // 🔒 Esto es solo FRONTEND (mock)
+      if (email === 'admin' && password === '1234') {
+        window.location.href = 'dashboard.html';
+      } else {
+        errorBox.style.display = 'block';
+      }
+    });
+  </script>
+
+</body>
+</html>

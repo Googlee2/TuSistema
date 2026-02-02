@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Stock | TuSistema</title>
+
+  <style>
+    :root {
+      --primario: #1e293b;
+      --secundario: #2563eb;
+      --fondo: #f1f5f9;
+      --blanco: #ffffff;
+      --gris: #64748b;
+      --borde: #e5e7eb;
+      --verde: #16a34a;
+      --rojo: #dc2626;
+      --amarillo: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      background: var(--fondo);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 240px;
+      background: var(--primario);
+      color: white;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .menu a {
+      display: block;
+      color: #cbd5f5;
+      text-decoration: none;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .menu a.active,
+    .menu a:hover {
+      background: #334155;
+      color: white;
+    }
+
+    /* CONTENT */
+    .content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .topbar h1 {
+      color: var(--primario);
+    }
+
+    /* BOX */
+    .box {
+      background: var(--blanco);
+      padding: 20px;
+      border-radius: 10px;
+      border: 1px solid var(--borde);
+      margin-bottom: 20px;
+    }
+
+    /* FORM */
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid var(--borde);
+    }
+
+    .btn {
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--secundario);
+      color: white;
+    }
+
+    /* TABLE */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid var(--borde);
+      font-size: 0.95rem;
+    }
+
+    th {
+      color: var(--gris);
+      text-align: left;
+    }
+
+    .badge {
+      padding: 6px 10px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .ok {
+      background: var(--verde);
+    }
+
+    .low {
+      background: var(--amarillo);
+    }
+
+    .out {
+      background: var(--rojo);
+    }
+
+    @media (max-width: 1000px) {
+      .sidebar {
+        display: none;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <h2>TuSistema</h2>
+    <nav class="menu">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ventas.html">Ventas</a>
+      <a href="stock.html" class="active">Stock</a>
+      <a href="#">Reportes</a>
+      <a href="#">Salir</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <div class="topbar">
+      <h1>Gestión de stock</h1>
+    </div>
+
+    <!-- NUEVO PRODUCTO -->
+    <section class="box">
+      <h3>Agregar / Actualizar producto</h3>
+
+      <div class="form-grid">
+        <div>
+          <label>Producto</label>
+          <input type="text" placeholder="Nombre del producto">
+        </div>
+
+        <div>
+          <label>Precio</label>
+          <input type="number" placeholder="$">
+        </div>
+
+        <div>
+          <label>Cantidad</label>
+          <input type="number">
+        </div>
+
+        <div>
+          <label>&nbsp;</label>
+          <button class="btn btn-primary">Guardar</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- LISTADO -->
+    <section class="box">
+      <h3>Listado de productos</h3>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Producto</th>
+            <th>Precio</th>
+            <th>Cantidad</th>
+            <th>Estado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Producto A</td>
+            <td>$ 5.000</td>
+            <td>32</td>
+            <td><span class="badge ok">OK</span></td>
+          </tr>
+          <tr>
+            <td>Producto B</td>
+            <td>$ 8.000</td>
+            <td>5</td>
+            <td><span class="badge low">BAJO</span></td>
+          </tr>
+          <tr>
+            <td>Producto C</td>
+            <td>$ 3.200</td>
+            <td>0</td>
+            <td><span class="badge out">SIN STOCK</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+</body>
+</html>

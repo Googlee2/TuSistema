@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gráficos | TuSistema</title>
+  <style>
+    :root {
+      --primario: #1e293b;
+      --secundario: #2563eb;
+      --fondo: #f1f5f9;
+      --blanco: #ffffff;
+      --gris: #64748b;
+      --borde: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; font-family: system-ui, sans-serif; }
+
+    body { margin:0; display:flex; min-height:100vh; background: var(--fondo); }
+
+    .sidebar { width: 240px; background: var(--primario); color:white; padding:20px; }
+    .sidebar h2 { text-align:center; margin-bottom:30px; }
+    .menu a { display:block; color:#cbd5f5; text-decoration:none; padding:12px; border-radius:6px; margin-bottom:8px; }
+    .menu a.active, .menu a:hover { background:#334155; color:white; }
+
+    .content { flex:1; padding:30px; }
+    h1 { color: var(--primario); margin-bottom:20px; }
+
+    .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(300px,1fr)); gap:20px; }
+    .box { background: var(--blanco); padding:20px; border-radius:10px; border:1px solid var(--borde); }
+
+    /* BARRAS */
+    .bars { display:flex; align-items:flex-end; gap:12px; height:200px; margin-top:20px; }
+    .bar { flex:1; background: var(--secundario); border-radius:6px 6px 0 0; display:flex; align-items:flex-end; justify-content:center; color:white; font-weight:600; padding-bottom:5px; }
+
+    /* TORTA */
+    .pie { width:180px; height:180px; border-radius:50%; margin:20px auto; }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <h2>TuSistema</h2>
+    <nav class="menu">
+      <a href="dashboard.html">Dashboard</a>
+      <a href="ventas.html">Ventas</a>
+      <a href="stock.html">Stock</a>
+      <a href="reportes.html">Reportes</a>
+      <a href="graficos.html" class="active">Gráficos</a>
+    </nav>
+  </aside>
+
+  <main class="content">
+    <h1>Gráficos de ventas</h1>
+    <div class="grid">
+
+      <!-- BARRAS -->
+      <div class="box">
+        <h3>Ventas por día</h3>
+        <div class="bars" id="bars"></div>
+      </div>
+
+      <!-- TORTA -->
+      <div class="box">
+        <h3>Ventas por categoría</h3>
+        <div class="pie" id="pie"></div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js"></script>
+  <script src="js/graficos.js"></script>
+
+</body>
+</html>
